@@ -1,8 +1,8 @@
-#Marlin Doc
+# Marlin Doc
 
-#####EZ3-India
+##### EZ3-India
 
-#Files
+# Files
 
 ## BlinkM.cpp & BlinkM.h
 >+ [BlinkM](http://thingm.com/products/blinkm/) is a “Smart LED”,programmable full-color RGB LED. Designed to allow the easy addition of dynamic indicators, displays, and lighting

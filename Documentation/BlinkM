@@ -1,0 +1,9 @@
+# Marlin Doc
+##### EZ3-India
+
+# BlinkM
+
+1. **void SendColors(byte red, byte grn, byte blu)**
+  + Can be used at various stages of the print cycle to show the status of the printer
+  + arguments are between 0-255
+  + *Ex:* SendColors(255,0,0) is RED , SendColors(255,0,255) is YELLOW 

@@ -1,0 +1,40 @@
+# Marlin Doc
+##### EZ3-India
+
+# cardreader
+
+ **CardReader::CardReader() **
+  + Defines public CardReader method
+  + Initialisaiton of printer status flags
+  + Which are further used in other CardReader methods
+___
+ **char \*createFilename(char *buffer,const dir_t &p)**
+  + Limit the file name to 12 characters
+___
+**void CardReader::lsDive(const char *prepend, SdFile parent, const char * const match/*=NULL*/)**
+  + Dive into a folder and recurse depth-first to perform a pre-set operation lsAction:
+ *   LS_Count       - Add +1 to nrFiles for every file within the parent
+ *   LS_GetFilename - Get the filename of the file indexed by nrFiles
+ *   LS_SerialPrint - Print the full path of each file to serial output
+___
+**void CardReader::ls()**
+  + lists all files to Serial Out
+___
+**void CardReader::initsd()**
+  + Initializes SDcard and sets the ROOT dir
+___
+**void CardReader::setroot()**
+  + Sets Current Dir to ROOT
+___
+**void CardReader::release()**
+  + Set flags before SD/Print release
+___
+**void CardReader::startFileprint()**
+  + Set Printing Flag to true
+___
+**void CardReader::pauseSDPrint()**
+  + Set Printing Flag to false
+___
+**void CardReader::openLogFile(char* name)**
+  + 
+___

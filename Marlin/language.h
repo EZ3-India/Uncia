@@ -51,7 +51,7 @@
   #ifdef CUSTOM_MENDEL_NAME
     #define MACHINE_NAME CUSTOM_MENDEL_NAME
   #else
-    #define MACHINE_NAME "EZ-MAKER"
+    #define MACHINE_NAME "DEMO-3"
     #define FIRMWARE_URL "https://www.ez3.in/downloads"
   #endif
 
@@ -105,7 +105,7 @@
 #define MSG_ERR_NO_THERMISTORS              "No thermistors - no temperature"
 #define MSG_M109_INVALID_EXTRUDER           "M109 Invalid extruder "
 #define MSG_HEATING                         "Hotend Heating"
-#define MSG_HEATING_COMPLETE                "Hotend Heated"  //EZ-Maker Ugly fix. (Marlin default: Printing...) 
+#define MSG_HEATING_COMPLETE                "Hotend Heated"  //EZ-Maker Ugly fix. (Marlin default: Printing...)
 #define MSG_BED_HEATING                     "Bed Heating"
 #define MSG_BED_DONE                        "Bed Heated"
 #define MSG_M115_REPORT                     "FIRMWARE_NAME:Marlin V1.0.2; Sprinter/grbl mashup for gen6 FIRMWARE_URL:" FIRMWARE_URL " PROTOCOL_VERSION:" PROTOCOL_VERSION " MACHINE_TYPE:" MACHINE_NAME " EXTRUDER_COUNT:" STRINGIFY(EXTRUDERS) " UUID:" MACHINE_UUID "\n"
