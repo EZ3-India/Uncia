@@ -61,7 +61,7 @@
 
 
 #ifndef MACHINE_UUID
-   #define MACHINE_UUID "ES200-16.06.2015-011"
+   #define MACHINE_UUID "ES150-16.06.2015-011"
 #endif
 
 
