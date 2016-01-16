@@ -14,11 +14,12 @@ FORCE_INLINE void Config_PrintSettings() {}
 #ifdef EEPROM_SETTINGS
 void Config_StoreSettings();
 void Config_RetrieveSettings();
-void totalprints();
 void showtotalprints();
-int incrementtnp();
+void totalprints();
+void totalprints_success();
+int increasetnp(int);
+void resettnp();
 int return_tnp();
-void resetTNP();
 
 #else
 FORCE_INLINE void Config_StoreSettings() {}

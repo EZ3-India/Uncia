@@ -203,6 +203,11 @@
 #ifdef SDSUPPORT
 CardReader card;
 #endif
+// LayerCount
+int current_layer = -2;
+int total_layers = 0;
+int fil_length =0;
+
 float homing_feedrate[] = HOMING_FEEDRATE;
 bool axis_relative_modes[] = AXIS_RELATIVE_MODES;
 int feedmultiply=100; //100->1 200->2
@@ -379,6 +384,10 @@ const int sensitive_pins[] = SENSITIVE_PINS; // Sensitive pin list for M42
 static unsigned long previous_millis_cmd = 0;
 static unsigned long max_inactive_time = 0;
 static unsigned long stepper_inactive_time = DEFAULT_STEPPER_DEACTIVE_TIME*1000l;
+
+// Auto-Sleep
+// static unsigned long auto_sleep_time = 60000;
+
 
 unsigned long starttime=0;
 unsigned long stoptime=0;
@@ -624,6 +633,9 @@ void setup()
   digitalWrite(SERVO0_PIN, LOW); // turn it off
 #endif // Z_PROBE_SLED
   setup_homepin();
+  // Auto-sleep
+  // pinMode(4, OUTPUT);
+  // digitalWrite(4,1);
 }
 
 
@@ -1373,6 +1385,16 @@ void process_commands()
     case 1: // G1
       if(Stopped == false) {
         get_coordinates(); // For X Y Z E F
+        // LayerCount
+        if (code_seen('Z'))
+        {
+          current_layer ++;
+        }
+        if (code_seen('E'))
+        {
+          fil_length = code_value()/10;
+        }
+
           #ifdef FWRETRACT
             if(autoretract_enabled)
             if( !(code_seen('X') || code_seen('Y') || code_seen('Z')) && code_seen('E')) {
@@ -3508,22 +3530,35 @@ case 404:  //M404 Enter the nominal filament width (3mm, 1.75mm ) N<3.0> or disp
         Config_PrintSettings();
     }
     break;
-    case 504: // M504 Show total number of prints EZ-MAKER
-    {
-        showtotalprints();
-    }
-    break;
-    // case 505: // Testing EZ-MAKER counter
-    // {
-    //     totalprints();
-    // }
-    // break;
-    case 1000: // Show total number of prints EZ-MAKER
-    {
-        resetTNP();
-    }
-    break;
+    case 504:
+{
+  // Place M504 S at the beginning of gcode file
+  if (code_seen('S')){
+      current_layer= -2;
+      fil_length=0;
+    // Keep funtions to be executed when print starts here
+      totalprints(); // Increase the Print-Started counter by 1
+  }
 
+  // Place M504 E at the END of gcode file
+  if (code_seen('E')) {
+
+    //Finallly
+      totalprints_success(); // Increase the Print-Success counter by 1
+  }
+  if (code_seen('L')) {
+    total_layers = code_value();
+  }
+
+}
+break;
+case 505: // Testing EZ-MAKER counter
+{
+  if (code_seen('S')) showtotalprints(); // Gets the current Print Count- M505 G
+  if (code_seen('C')) resettnp(); // Clears the Print Count - M505 C
+
+}
+break;
 
 
 

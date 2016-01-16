@@ -209,6 +209,11 @@ void setPwmFrequency(uint8_t pin, int val);
   #define CRITICAL_SECTION_END    SREG = _sreg;
 #endif //CRITICAL_SECTION_START
 
+// LayerCount
+extern int current_layer;
+extern int fil_length;
+extern int total_layers;
+
 extern float homing_feedrate[];
 extern bool axis_relative_modes[];
 extern int feedmultiply;

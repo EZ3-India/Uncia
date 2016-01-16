@@ -7,7 +7,7 @@
 #include "language.h"
 #include "ConfigurationStore.h"
 
-#define GREEN_LED digitalWrite(40,0);digitalWrite(44,0);digitalWrite(42,1)
+#define GREEN_LED digitalWrite(40,0);digitalWrite(65,0);digitalWrite(42,1)
 
 
 
@@ -219,6 +219,7 @@ void CardReader::startFileprint()
   if(cardOK)
   {
     sdprinting = true;
+    // totalprints();
   }
 }
 
@@ -644,8 +645,8 @@ void CardReader::printingHasFinished()
       {
           enquecommand_P(PSTR(SD_FINISHED_RELEASECOMMAND));
           GREEN_LED;
-          totalprints();
-          
+          // totalprints_success();
+
       }
 
       autotempShutdown();

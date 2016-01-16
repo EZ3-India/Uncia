@@ -74,7 +74,7 @@
   /* nothing here yet */
 
 // Common serial messages
-#define MSG_MARLIN "Marlin"
+#define MSG_MARLIN "Uncia"
 
 // Serial Console Messages (do not translate those!)
 
@@ -108,7 +108,7 @@
 #define MSG_HEATING_COMPLETE                "Hotend Heated"  //EZ-Maker Ugly fix. (Marlin default: Printing...)
 #define MSG_BED_HEATING                     "Bed Heating"
 #define MSG_BED_DONE                        "Bed Heated"
-#define MSG_M115_REPORT                     "FIRMWARE_NAME:Marlin V1.0.2; Sprinter/grbl mashup for gen6 FIRMWARE_URL:" FIRMWARE_URL " PROTOCOL_VERSION:" PROTOCOL_VERSION " MACHINE_TYPE:" MACHINE_NAME " EXTRUDER_COUNT:" STRINGIFY(EXTRUDERS) " UUID:" MACHINE_UUID "\n"
+#define MSG_M115_REPORT                     "FIRMWARE_NAME:Uncia V2.00; Sprinter/grbl mashup for gen6 FIRMWARE_URL:" FIRMWARE_URL " PROTOCOL_VERSION:" PROTOCOL_VERSION " MACHINE_TYPE:" MACHINE_NAME " EXTRUDER_COUNT:" STRINGIFY(EXTRUDERS) " UUID:" MACHINE_UUID "\n"
 #define MSG_COUNT_X                         " Count X: "
 #define MSG_ERR_KILLED                      "Printer halted. kill() called!"
 #define MSG_ERR_STOPPED                     "Printer stopped due to errors. Fix the error and use M999 to restart. (Temperature is reset. Set it after restarting)"

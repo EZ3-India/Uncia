@@ -128,44 +128,85 @@ void Config_StoreSettings()
   SERIAL_ECHOLNPGM("Settings Stored");
 }
 
+//uint32_t tnp=0;
+#define count_offset 100
+// This should be calculated for better optimization!
+#define success_count_offset 110
+
+/**
+ * Gets the current Print Count- M505
+ */
+void showtotalprints() {
+  int i = return_tnp(); // has total prints completed
+  int f = count_offset;
+  int Stnp;
+  EEPROM_READ_VAR(f,Stnp);
+  int fail_prints  = Stnp - i ;
+
+  SERIAL_ECHO_START;
+  SERIAL_ECHOPGM("Total of Succesful Prints: ");
+  SERIAL_ECHOLN(i);
+  SERIAL_ECHOPGM("Failed Prints: ");
+  SERIAL_ECHOLN(fail_prints);
+
+  }
+
+/**
+ * Increase the print counter by 1 (Indicates another Print Started) - M505 S
+ */
 void totalprints() {
-  int i=100;
-  tnp=incrementtnp();
+  int i = count_offset;
+  tnp=increasetnp(i);
   EEPROM_WRITE_VAR(i,tnp);
   SERIAL_ECHO_START;
-  SERIAL_ECHOPAIR(" Total: ",tnp);
-} //EZ-MAKER Total NO of Prints Done
+  SERIAL_ECHOPGM("Print Started! Counter incremented ");
+  SERIAL_ECHOLN(tnp);
+}
 
-void resetTNP() {
-  int zero=0;
-  int i=100;
-  EEPROM_WRITE_VAR(i,zero);
-  SERIAL_ECHOLN("Counter Reset!");
-}//EZ-MAKER Print Counter Reset
+/**
+ * Increase the success counter by 1 (Indicates another Print has Finished) - M505 F
+ */
 
-int incrementtnp() {
-  int i=100;
+void totalprints_success(){
+  int i = success_count_offset;
+  tnp=increasetnp(i);
+  EEPROM_WRITE_VAR(i,tnp);
+  SERIAL_ECHO_START;
+  SERIAL_ECHOPGM("Total Succesful Prints: ");
+  SERIAL_ECHOLN(tnp);
+}
+
+int increasetnp(int offset) {
+  int i = offset;
   int itnp;
   EEPROM_READ_VAR(i,itnp);
   itnp=itnp+1;
   return itnp;
 }
 
+/**
+ * Clears the Print Count - M505 C
+ */
+void resettnp() {
+  int i = count_offset;
+  int zero=0;
+  EEPROM_WRITE_VAR(i,zero);
+  i = success_count_offset;
+  EEPROM_WRITE_VAR(i,zero);
+  SERIAL_ECHOLNPGM("Print counters has been resetted ");
+  //SERIAL_ECHOPGM("Total of Prints: ");
+  //SERIAL_ECHOLN(tnp);
+}
+
+/**
+ * Print counter LCD implementation
+ */
 int return_tnp() {
-  int i=100;
-  int Rtnp;
+  int i = success_count_offset;
+  int Rtnp; // has total number of prints started
   EEPROM_READ_VAR(i,Rtnp);
   return Rtnp;
 }
-
-void showtotalprints() {
-  int i=100;
-  EEPROM_READ_VAR(i,tnp);
-  SERIAL_ECHO_START;
-  SERIAL_ECHOPAIR("Total Number of Prints : ",tnp);
-  } //EZ-MAKER show total prints
-
-
 
 #endif //EEPROM_SETTINGS
 

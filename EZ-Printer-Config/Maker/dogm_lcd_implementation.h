@@ -39,9 +39,9 @@
 #include "ultralcd.h"
 #include "ultralcd_st7920_u8glib_rrd.h"
 
-#define WHITE_LED digitalWrite(40,1);digitalWrite(44,1);digitalWrite(42,1)
-#define RED_LED digitalWrite(40,1);digitalWrite(44,0);digitalWrite(42,0)
-#define BLUE_LED digitalWrite(40,0);digitalWrite(44,1);digitalWrite(42,0)
+#define WHITE_LED digitalWrite(40,1);digitalWrite(65,1);digitalWrite(42,1)
+#define RED_LED digitalWrite(40,1);digitalWrite(65,0);digitalWrite(42,0)
+#define BLUE_LED digitalWrite(40,0);digitalWrite(65,1);digitalWrite(42,0)
 
 
 /* Russian language not supported yet, needs custom font
@@ -99,7 +99,7 @@ static void lcd_implementation_init()
 {
  pinMode(40, OUTPUT);
  pinMode(42, OUTPUT);
- pinMode(44, OUTPUT);
+ pinMode(65, OUTPUT);
  WHITE_LED;
 
 #ifdef LCD_PIN_BL
@@ -144,7 +144,7 @@ static void lcd_implementation_init()
 			u8g.setFont(u8g_font_5x8);
 			//u8g.drawStr(62,40,"Model#");
 			u8g.drawStr(62,52,"ES-200");
-			u8g.drawStr(80,61,"V 1.50");
+			u8g.drawStr(62,61,"V 2.00");
 	   } while( u8g.nextPage() );
 }
 
@@ -223,7 +223,7 @@ static void lcd_implementation_status_screen()
 			// do nothing
 		 }
 
- u8g.setPrintPos(80,47);
+ u8g.setPrintPos(95,47);
  if(starttime != 0)
     {
         uint16_t time = millis()/60000 - starttime/60000;
@@ -234,6 +234,14 @@ static void lcd_implementation_status_screen()
     }else{
 			lcd_printPGM(PSTR("--:--"));
 		 }
+
+     u8g.setPrintPos(55,47);
+     u8g.print("TL");
+     u8g.drawPixel(67,43);
+     u8g.drawPixel(67,45);
+     u8g.setPrintPos(68,47);
+     u8g.print(itostr4left(total_layers));
+
  #endif
 
   // Extruders
@@ -259,29 +267,53 @@ static void lcd_implementation_status_screen()
  #endif
 
 
- // X, Y, Z-Coordinates
+ // // X, Y, Z-Coordinates
+ // u8g.setFont(FONT_STATUSMENU);
+ // u8g.drawBox(0,29,128,10);
+ // u8g.setColorIndex(0);	// white on black
+ // u8g.setPrintPos(2,37);
+ // u8g.print("X");
+ // u8g.drawPixel(8,33);
+ // u8g.drawPixel(8,35);
+ // u8g.setPrintPos(10,37);
+ // u8g.print(ftostr31ns(current_position[X_AXIS]));
+ // u8g.setPrintPos(43,37);
+ // lcd_printPGM(PSTR("Y"));
+ // u8g.drawPixel(49,33);
+ // u8g.drawPixel(49,35);
+ // u8g.setPrintPos(51,37);
+ // u8g.print(ftostr31ns(current_position[Y_AXIS]));
+ // u8g.setPrintPos(83,37);
+ // u8g.print("Z");
+ // u8g.drawPixel(89,33);
+ // u8g.drawPixel(89,35);
+ // u8g.setPrintPos(91,37);
+ // u8g.print(ftostr31(current_position[Z_AXIS]));
+ // u8g.setColorIndex(1);	// black on white
+
+
+
  u8g.setFont(FONT_STATUSMENU);
  u8g.drawBox(0,29,128,10);
  u8g.setColorIndex(0);	// white on black
  u8g.setPrintPos(2,37);
- u8g.print("X");
- u8g.drawPixel(8,33);
- u8g.drawPixel(8,35);
- u8g.setPrintPos(10,37);
- u8g.print(ftostr31ns(current_position[X_AXIS]));
- u8g.setPrintPos(43,37);
- lcd_printPGM(PSTR("Y"));
- u8g.drawPixel(49,33);
- u8g.drawPixel(49,35);
- u8g.setPrintPos(51,37);
- u8g.print(ftostr31ns(current_position[Y_AXIS]));
+ u8g.print("Len|cm");
+ u8g.drawPixel(38,33);
+ u8g.drawPixel(38,35);
+ u8g.setPrintPos(40,37);
+ u8g.print(itostr4left(fil_length));
+
  u8g.setPrintPos(83,37);
- u8g.print("Z");
+ u8g.print("L");
  u8g.drawPixel(89,33);
  u8g.drawPixel(89,35);
  u8g.setPrintPos(91,37);
- u8g.print(ftostr31(current_position[Z_AXIS]));
+ if (current_layer>=0) {
+ u8g.print(itostr3(current_layer));
+ }
  u8g.setColorIndex(1);	// black on white
+
+
 
  // Feedrate
  u8g.setFont(u8g_font_6x10_marlin);
@@ -309,7 +341,6 @@ static void lcd_implementation_status_screen()
 
 			{
 				printing_started = true;
-
 			}
 
 	else
@@ -326,6 +357,8 @@ static void lcd_implementation_status_screen()
 	if(IS_SD_PRINTING && !printing_started) //file selected and heating
 	{
 		RED_LED;
+    u8g.print(lcd_status_message);
+
 	}
 
 
